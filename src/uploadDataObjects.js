@@ -11,14 +11,14 @@ const getKeyspaces = async client => {
   } catch (e) {
     console.log(e);
     return null;
-  }
+  };
 };
 
 const getTableName = async (client, keyspaces) => {
   if (!keyspaces) {
     return null;
-  }
-  const tables = []
+  };
+  const tables = [];
   for (let i = 0; i < keyspaces.length; i++) {
     try {
       const resp = await client.execute(`SELECT * FROM system_schema.tables WHERE keyspace_name = '${keyspaces[i].keyspace}';`);
@@ -28,7 +28,7 @@ const getTableName = async (client, keyspaces) => {
     } catch (e) {
       console.log(e);
       return null;
-    }
+    };
   };
   return tables;
 };
@@ -36,7 +36,7 @@ const getTableName = async (client, keyspaces) => {
 const getFirstRowFromTable = async (client, data) => {
   if(!data) {
     return null;
-  }
+  };
   result = [];
   for (let i = 0; i < data.length; i++) {
     let keyspace = {keyspace: '', tables: []};
@@ -63,31 +63,32 @@ const getDataFromRow = (row) => {
       someObj = someObj.substring(1, someObj.length-1);
       if (uuid.validate(someObj)) {
         result[key] = someObj;
-      }
-    }
+      };
+    };
     if (typeof(row.rows[0][key]) === 'string') {
       if (checkJsonString(row.rows[0][key])) {
         const value = JSON.parse(row.rows[0][key]);
         result[key] = value;
-      }
-    }
-  }
+      };
+    };
+  };
   return result;
-}
+};
 
 const checkJsonString = string => {
   try {
     JSON.parse(string);
   } catch (e) {
     return false;
-  }
+  };
   return true;
-}
+};
 
 const uploadDataObjects = async client => {
   if (!client) {
+    console.log('Database not connected');
     return null;
-  }
+  };
   const keyspaces = await getKeyspaces(client);
   const tables = await getTableName(client, keyspaces);
   const shemaObj = await getFirstRowFromTable(client, tables);

@@ -1,11 +1,16 @@
 const toJsonSchema = require('to-json-schema');
 
 const convert = data => {
+  if (!data) {
+    console.log('Empty data for converting to json');    
+    return null;
+  };
+
   let items = [];
 
   for (let i = 0; i < data.length; i++) {
     items.push(createKeySpaceObj(data[i]));
-  }
+  };
 
   return {
     $schema: 'http://json-schema.org/draft-04/schema#',
@@ -33,7 +38,7 @@ const createTableObj = (table) => {
   return {
     title: table.name,
     ...columns
-  }
-}
+  };
+};
 
 module.exports = convert;
