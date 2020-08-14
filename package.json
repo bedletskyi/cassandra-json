@@ -1,0 +1,16 @@
+{
+  "name": "cassandra-json",
+  "version": "1.0.0",
+  "description": "Some app for uploading database schema to json file",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Vitalii Bedletskyi",
+  "license": "ISC",
+  "dependencies": {
+    "cassandra-driver": "^4.6.0",
+    "to-json-schema": "^0.2.5",
+    "uuid": "^8.3.0"
+  }
+}
