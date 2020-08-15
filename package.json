@@ -4,7 +4,8 @@
   "description": "Some app for uploading database schema to json file",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "node index",
+    "test": "jest"
   },
   "author": "Vitalii Bedletskyi",
   "license": "ISC",
@@ -12,5 +13,8 @@
     "cassandra-driver": "^4.6.0",
     "to-json-schema": "^0.2.5",
     "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "jest": "^26.4.0"
   }
 }

@@ -6,39 +6,39 @@ const convert = data => {
     return null;
   };
 
-  let items = [];
+  let keyspaces = [];
 
-  for (let i = 0; i < data.length; i++) {
-    items.push(createKeySpaceObj(data[i]));
-  };
+  data.forEach(keyspace => {
+    keyspaces.push(createKeySpaceObj(keyspace));
+  });
 
   return {
     $schema: 'http://json-schema.org/draft-04/schema#',
     description: 'Database schema',
     type: 'array',
-    items
+    keyspaces
   };
 };
 
-const createKeySpaceObj = (keyspace) => {
+const createKeySpaceObj = keyspace => {
   let tables = [];
-  for (let i = 0; i < keyspace.tables.length; i++) {
-    tables.push(createTableObj(keyspace.tables[i]));
-  };
+  keyspace.tables.forEach(table => {
+    tables.push(createTableObj(table));
+  });
 
   return {
     type: 'object',
-    title: keyspace.keyspace,
+    title: keyspace.name,
     tables
   };
 };
 
-const createTableObj = (table) => {
+const createTableObj = table => {
   const columns = toJsonSchema(table.columns);
   return {
-    title: table.name,
+    title: table.title,
     ...columns
   };
 };
 
-module.exports = convert;
+module.exports = {convert, createKeySpaceObj, createTableObj};
